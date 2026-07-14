@@ -41,10 +41,7 @@ const revealEls = document.querySelectorAll('.reveal');
 
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('revealed');
-      revealObserver.unobserve(entry.target);
-    }
+    entry.target.classList.toggle('revealed', entry.isIntersecting);
   });
 }, { threshold: 0.2 });
 
