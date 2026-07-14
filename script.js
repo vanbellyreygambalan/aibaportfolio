@@ -3,19 +3,16 @@ const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.getElementById('navLinks');
 const links = document.querySelectorAll('.nav-link');
 
-// Add shadow / darken navbar on scroll
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 10);
 });
 
-// Mobile menu open/close
 menuToggle.addEventListener('click', () => {
   const isOpen = navLinks.classList.toggle('open');
   menuToggle.classList.toggle('open', isOpen);
   menuToggle.setAttribute('aria-expanded', isOpen);
 });
 
-// Close mobile menu when a link is clicked
 links.forEach(link => {
   link.addEventListener('click', () => {
     navLinks.classList.remove('open');
@@ -24,7 +21,6 @@ links.forEach(link => {
   });
 });
 
-// Highlight the active section link while scrolling
 const sections = document.querySelectorAll('main section[id]');
 
 const observer = new IntersectionObserver((entries) => {
@@ -40,3 +36,16 @@ const observer = new IntersectionObserver((entries) => {
 }, { rootMargin: '-50% 0px -50% 0px' });
 
 sections.forEach(section => observer.observe(section));
+
+const revealEls = document.querySelectorAll('.reveal');
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('revealed');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+revealEls.forEach(el => revealObserver.observe(el));
